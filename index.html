@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PRAGYA interactive M.Com learning simulation on sampling methods, sample size, sampling decisions and sampling errors.">
+<title>PRAGYA | Sampling – M.Com</title>
+<style>
+:root{--ink:#17243a;--muted:#617086;--paper:#f5f7fb;--card:#fff;--line:#dce3ed;--blue:#2457a7;--blue2:#eaf1ff;--teal:#087f79;--teal2:#e6f6f3;--amber:#98600b;--amber2:#fff4dc;--red:#a43a3a;--red2:#fff0ef;--shadow:0 8px 28px rgba(24,42,70,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:linear-gradient(115deg,#142d55,#2457a7);color:#fff;padding:28px max(20px,calc((100% - 1160px)/2))}
+header .eyebrow{font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;opacity:.82;font-weight:700}
+header h1{margin:7px 0 4px;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.15}
+header p{margin:0;max-width:780px;color:#e4edff}
+.wrap{max-width:1160px;margin:auto;padding:22px 18px 60px}
+.topline{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}
+.pill{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 12px;color:var(--muted);font-size:.85rem}
+.progress{height:7px;background:#e2e8f1;border-radius:9px;overflow:hidden;flex:1;min-width:120px;max-width:330px}.progress span{display:block;height:100%;background:var(--teal);width:12.5%;transition:width .25s}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:20px;align-items:start}
+nav{position:sticky;top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--shadow)}
+nav .navtitle{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800;padding:7px 9px}
+nav button{display:flex;gap:10px;align-items:center;width:100%;border:0;background:transparent;text-align:left;padding:10px;border-radius:10px;color:#42516a;font:inherit;cursor:pointer}
+nav button:hover{background:#f2f5fa}nav button.active{background:var(--blue2);color:var(--blue);font-weight:750}
+nav .num{display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#edf1f6;font-size:.8rem}nav button.active .num{background:var(--blue);color:#fff}
+main{min-width:0}.panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);box-shadow:var(--shadow);animation:fade .2s ease}.panel.active{display:block}
+@keyframes fade{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}
+.kicker{color:var(--teal);font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.75rem}
+h2{font-size:clamp(1.4rem,3vw,2rem);margin:5px 0 8px;line-height:1.2}h3{font-size:1.12rem;margin:0 0 8px}p{margin:8px 0 14px}.muted{color:var(--muted)}.small{font-size:.88rem}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}.soft{background:#f8faff}.callout{border-left:4px solid var(--blue);background:var(--blue2);padding:13px 15px;border-radius:0 10px 10px 0;margin:14px 0}.warning{border-left-color:#d99b27;background:var(--amber2)}.success{border-left-color:var(--teal);background:var(--teal2)}
+.tag{display:inline-block;border-radius:999px;background:#edf2f8;color:#40516a;padding:3px 9px;font-size:.76rem;font-weight:700;margin:2px}
+ul{padding-left:21px}li{margin:5px 0}
+button,.btn{font:inherit;cursor:pointer}.actions{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:10px 15px;font-weight:700}.btn.primary{background:var(--blue);border-color:var(--blue);color:white}.btn:hover{filter:brightness(.97)}.btn:disabled{opacity:.4;cursor:not-allowed}
+label{display:block;font-size:.9rem;font-weight:700;margin:10px 0 5px}input,select{width:100%;padding:10px 11px;border:1px solid #cbd5e2;border-radius:9px;background:#fff;color:var(--ink);font:inherit}input:focus,select:focus,button:focus-visible{outline:3px solid #9abaff;outline-offset:2px}
+.range-row{display:flex;align-items:center;gap:12px}.range-row input{padding:0;accent-color:var(--blue)}.value{font-weight:800;color:var(--blue);min-width:58px;text-align:right;font-variant-numeric:tabular-nums}
+.result{font-size:2rem;font-weight:850;color:var(--blue);line-height:1.2;font-variant-numeric:tabular-nums}.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#f1f4f8;padding:10px 12px;border-radius:9px;display:block;overflow-wrap:anywhere}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f4f7fb;color:#40516a}
+.choice{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:10px;padding:12px;margin:8px 0;background:#fff;color:var(--ink)}.choice:hover{border-color:#8aa8d8;background:#f8faff}.choice.selected{border:2px solid var(--blue);background:var(--blue2)}.feedback{padding:12px 14px;border-radius:10px;margin-top:12px;display:none}.feedback.show{display:block}.feedback.good{background:var(--teal2);color:#075d58}.feedback.bad{background:var(--red2);color:#8c3030}
+.bar{height:12px;background:#edf1f6;border-radius:20px;overflow:hidden}.bar span{height:100%;display:block;background:var(--teal);width:0;transition:width .2s}
+.stage-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:24px;padding-top:16px;border-top:1px solid var(--line)}
+footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:24px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}nav{position:static;display:flex;overflow:auto;gap:4px;padding:8px}nav .navtitle{display:none}nav button{min-width:max-content;width:auto;padding:8px}.grid3{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+@media(max-width:430px){header{padding:22px 17px}.wrap{padding:15px 12px 40px}.panel{padding:17px}.pill{font-size:.77rem}}
+@media print{nav,.actions,.stage-footer,.topline{display:none!important}.layout{display:block}.panel{display:block!important;box-shadow:none;break-inside:avoid;margin-bottom:15px}body{background:white}}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">PRAGYA · Interactive Learning Simulation</div>
+  <h1>Sampling in Research</h1>
+  <p>An applied learning experience for M.Com students · Research Methodology</p>
+</header>
+<div class="wrap">
+  <div class="topline">
+    <span class="pill">🎓 M.Com · Research Methodology</span>
+    <span class="pill" id="stageLabel">Stage 1 of 8</span>
+    <div class="progress" aria-label="Learning progress"><span id="progressBar"></span></div>
+  </div>
+  <div class="layout">
+    <nav aria-label="Learning stages">
+      <div class="navtitle">Learning pathway</div>
+      <button class="active" data-stage="0"><span class="num">1</span> Introduction</button>
+      <button data-stage="1"><span class="num">2</span> Concepts</button>
+      <button data-stage="2"><span class="num">3</span> Explore methods</button>
+      <button data-stage="3"><span class="num">4</span> Sample size lab</button>
+      <button data-stage="4"><span class="num">5</span> Case study</button>
+      <button data-stage="5"><span class="num">6</span> Make a decision</button>
+      <button data-stage="6"><span class="num">7</span> Knowledge check</button>
+      <button data-stage="7"><span class="num">8</span> Reflection</button>
+    </nav>
+    <main>
+      <section class="panel active" id="stage-0">
+        <div class="kicker">01 · Purpose</div><h2>Why do researchers sample?</h2>
+        <p>A researcher often wants to understand a large group, but studying every member may be costly, time-consuming or impractical. Sampling means selecting a subset of that population to learn about the whole population.</p>
+        <div class="grid2">
+          <div class="card soft"><h3>Population</h3><p class="muted">The complete group relevant to the research question.</p><strong>Example:</strong> All 4,800 M.Com students enrolled across selected colleges.</div>
+          <div class="card soft"><h3>Sample</h3><p class="muted">The selected units from which data are collected.</p><strong>Example:</strong> 240 students selected from that population.</div>
+        </div>
+        <div class="callout"><strong>Simulation challenge:</strong> You are a postgraduate researcher studying digital payment adoption among M.Com students. You must choose a sampling method, estimate a sample size and defend your decisions.</div>
+        <h3>Learning objectives</h3>
+        <ul><li>Distinguish population, sampling unit, sampling frame and sample.</li><li>Differentiate probability and non-probability sampling methods.</li><li>Estimate sample size using a stated formula and assumptions.</li><li>Select and justify a sampling method for a research situation.</li><li>Recognise sampling error, bias and limitations in generalisation.</li></ul>
+        <div class="callout warning small"><strong>Academic note:</strong> The figures in the activities are hypothetical teaching data. They are not official statistics or claims about any university.</div>
+        <div class="actions"><span></span><button class="btn primary" onclick="go(1)">Start learning →</button></div>
+      </section>
+
+      <section class="panel" id="stage-1">
+        <div class="kicker">02 · Research</div><h2>Understand the sampling vocabulary</h2>
+        <p>Before choosing a technique, define exactly who or what can be studied.</p>
+        <div class="grid2">
+          <div class="card"><h3>Population</h3><p>All units about which the researcher wants to draw conclusions.</p><span class="tag">Who is in scope?</span></div>
+          <div class="card"><h3>Sampling unit</h3><p>The basic unit selected at a particular stage, such as an individual student, household or firm.</p><span class="tag">What gets selected?</span></div>
+          <div class="card"><h3>Sampling frame</h3><p>A list or operational representation of the population from which selection is made.</p><span class="tag">From which list?</span></div>
+          <div class="card"><h3>Sample</h3><p>The subset of units actually selected for the study.</p><span class="tag">Whom will you study?</span></div>
+        </div>
+        <h3>Two broad families of sampling</h3>
+        <div class="grid2">
+          <div class="card soft"><h3>Probability sampling</h3><p>Selection uses a random mechanism. Each eligible unit has a known, non-zero probability of selection.</p><p class="small"><strong>Examples:</strong> simple random, systematic, stratified and cluster sampling.</p></div>
+          <div class="card soft"><h3>Non-probability sampling</h3><p>Selection does not use random selection with known inclusion probabilities. Selection may depend on access, judgement or referrals.</p><p class="small"><strong>Examples:</strong> convenience, purposive, quota and snowball sampling.</p></div>
+        </div>
+        <div class="callout warning"><strong>Important distinction:</strong> A large sample does not automatically remove selection bias. The sampling process and coverage matter, not only the number of respondents.</div>
+        <div class="actions"><button class="btn" onclick="go(0)">← Back</button><button class="btn primary" onclick="go(2)">Explore methods →</button></div>
+      </section>
+
+      <section class="panel" id="stage-2">
+        <div class="kicker">03 · Arrange</div><h2>Explore sampling methods</h2>
+        <p>Select a method to see how it works and when it may be appropriate.</p>
+        <label for="methodSelect">Choose a sampling method</label>
+        <select id="methodSelect">
+          <optgroup label="Probability sampling">
+            <option value="simple">Simple random sampling</option><option value="systematic">Systematic sampling</option><option value="stratified">Stratified sampling</option><option value="cluster">Cluster sampling</option>
+          </optgroup>
+          <optgroup label="Non-probability sampling">
+            <option value="convenience">Convenience sampling</option><option value="purposive">Purposive sampling</option><option value="quota">Quota sampling</option><option value="snowball">Snowball sampling</option>
+          </optgroup>
+        </select>
+        <div class="card soft" style="margin-top:14px" aria-live="polite">
+          <div id="methodFamily" class="kicker">Probability sampling</div><h3 id="methodTitle">Simple random sampling</h3><p id="methodDesc"></p>
+          <div class="grid2"><div><strong>How selection works</strong><p id="methodHow" class="small muted"></p></div><div><strong>Watch out for</strong><p id="methodCaution" class="small muted"></p></div></div>
+          <div><strong>Illustrative example</strong><p id="methodExample" class="small muted"></p></div>
+        </div>
+        <h3 style="margin-top:18px">Quick comparison</h3>
+        <table><thead><tr><th>Method</th><th>Random selection?</th><th>Typical use</th></tr></thead><tbody>
+          <tr><td>Simple random</td><td>Yes</td><td>Complete, usable frame</td></tr><tr><td>Systematic</td><td>Random start, then fixed interval</td><td>Ordered list without problematic periodicity</td></tr><tr><td>Stratified</td><td>Yes, within strata</td><td>Ensure subgroup representation</td></tr><tr><td>Cluster</td><td>Yes, select clusters</td><td>Geographically dispersed population</td></tr><tr><td>Convenience</td><td>No</td><td>Exploratory or access-limited study</td></tr><tr><td>Purposive</td><td>No</td><td>Information-rich, criterion-based cases</td></tr><tr><td>Quota</td><td>No</td><td>Fill subgroup targets</td></tr><tr><td>Snowball</td><td>No</td><td>Hard-to-reach or networked populations</td></tr>
+        </tbody></table>
+        <div class="actions"><button class="btn" onclick="go(1)">← Back</button><button class="btn primary" onclick="go(3)">Sample size lab →</button></div>
+      </section>
+
+      <section class="panel" id="stage-3">
+        <div class="kicker">04 · Generate</div><h2>Sample size laboratory</h2>
+        <p>Explore how confidence level, margin of error and population size affect an illustrative sample-size estimate.</p>
+        <div class="callout"><strong>Formula used:</strong> Cochran's initial sample size for a proportion, followed by finite population correction.</div>
+        <span class="formula">n₀ = Z² × p × (1 − p) / e²</span>
+        <span class="formula" style="margin-top:7px">n = n₀ / [1 + (n₀ − 1) / N]</span>
+        <div class="grid2" style="margin-top:12px">
+          <div><label for="pop">Population size (N)</label><input id="pop" type="number" min="2" max="10000000" value="4800"></div>
+          <div><label for="confidence">Confidence level</label><select id="confidence"><option value="1.645">90% (Z = 1.645)</option><option value="1.96" selected>95% (Z = 1.96)</option><option value="2.576">99% (Z = 2.576)</option></select></div>
+          <div><label for="margin">Margin of error</label><div class="range-row"><input id="margin" type="range" min="2" max="10" step=".5" value="5"><span class="value" id="marginVal">5%</span></div></div>
+          <div><label for="prop">Expected proportion (p)</label><div class="range-row"><input id="prop" type="range" min="10" max="90" step="5" value="50"><span class="value" id="propVal">50%</span></div></div>
+        </div>
+        <div class="grid2" style="margin-top:14px">
+          <div class="card soft"><div class="small muted">Initial estimate (n₀)</div><div class="result" id="n0">384.16</div></div>
+          <div class="card soft"><div class="small muted">Finite population adjusted sample</div><div class="result" id="nFinal">356</div><div class="small muted">Rounded up to a whole respondent</div></div>
+        </div>
+        <div class="callout warning small"><strong>Interpretation:</strong> This is a planning estimate under the displayed assumptions, not a universal sample-size rule. It assumes a proportion estimate and a probability-sampling design. Non-response, design effects, subgroup analysis and study objectives may require adjustment.</div>
+        <p class="small muted">For p = 0.50, variability is maximised when the true proportion is unknown. The finite population correction is relevant when sampling without replacement from a defined finite population.</p>
+        <div class="actions"><button class="btn" onclick="go(2)">← Back</button><button class="btn primary" onclick="go(4)">Apply to case study →</button></div>
+      </section>
+
+      <section class="panel" id="stage-4">
+        <div class="kicker">05 · Your engagement</div><h2>Case study: Digital payment adoption</h2>
+        <p>You are designing a study of digital payment adoption among M.Com students in a hypothetical group of colleges.</p>
+        <div class="card soft">
+          <div class="grid3">
+            <div><div class="small muted">Total population</div><div class="result">4,800</div><div class="small muted">Students</div></div>
+            <div><div class="small muted">Colleges</div><div class="result">12</div><div class="small muted">Hypothetical</div></div>
+            <div><div class="small muted">Study focus</div><strong>Adoption, frequency and barriers</strong></div>
+          </div>
+        </div>
+        <h3 style="margin-top:18px">Your research constraints</h3>
+        <ul><li>Students are enrolled across 12 colleges.</li><li>College-wise student counts are available.</li><li>You want the sample to reflect variation across colleges and programme years.</li><li>Data collection will be conducted online and in person.</li></ul>
+        <div class="callout"><strong>Your task:</strong> Choose a method that can represent important subgroups and explain why it fits the study.</div>
+        <div class="actions"><button class="btn" onclick="go(3)">← Back</button><button class="btn primary" onclick="go(5)">Make your decision →</button></div>
+      </section>
+
+      <section class="panel" id="stage-5">
+        <div class="kicker">06 · Decision-making</div><h2>Choose and defend your sampling design</h2>
+        <p>Which design is most defensible for the case study, given the information provided?</p>
+        <div id="decisionChoices">
+          <button class="choice" data-answer="a">A. Convenience sampling — survey whichever students are easiest to contact.</button>
+          <button class="choice" data-answer="b">B. Stratified random sampling — form relevant strata (for example, college or programme year) and randomly select within them.</button>
+          <button class="choice" data-answer="c">C. Snowball sampling — ask each respondent to refer other students.</button>
+          <button class="choice" data-answer="d">D. Purposive sampling — select only students who already use digital payments.</button>
+        </div>
+        <div id="decisionFeedback" class="feedback" aria-live="polite"></div>
+        <h3 style="margin-top:20px">Design your sample allocation</h3>
+        <p class="small muted">Illustrative proportional allocation across three hypothetical college groups. Change the population counts and target sample to see the allocation update.</p>
+        <div class="grid2">
+          <div><label for="g1">Group A population</label><input id="g1" type="number" min="0" value="2000"></div>
+          <div><label for="g2">Group B population</label><input id="g2" type="number" min="0" value="1600"></div>
+          <div><label for="g3">Group C population</label><input id="g3" type="number" min="0" value="1200"></div>
+          <div><label for="targetN">Target sample size</label><input id="targetN" type="number" min="1" value="356"></div>
+        </div>
+        <div class="card" style="margin-top:12px"><table><thead><tr><th>Stratum</th><th>Population</th><th>Proportional sample</th></tr></thead><tbody id="allocationRows"></tbody></table><div class="small muted" id="allocationNote" aria-live="polite"></div></div>
+        <div class="callout warning small">Proportional allocation is one possible approach. Disproportionate allocation may be appropriate when subgroup comparisons are a priority; analysis may then require weighting. The three groups here are illustrative, not actual college categories.</div>
+        <div class="actions"><button class="btn" onclick="go(4)">← Back</button><button class="btn primary" onclick="go(6)">Take knowledge check →</button></div>
+      </section>
+
+      <section class="panel" id="stage-6">
+        <div class="kicker">07 · Assessment</div><h2>Check your understanding</h2>
+        <p>Answer all five questions. Select an option to receive feedback, then submit to view your score.</p>
+        <div id="quiz"></div>
+        <div class="actions"><button class="btn" onclick="resetQuiz()">Reset answers</button><button class="btn primary" id="submitQuiz">Submit assessment</button></div>
+        <div id="quizResult" class="feedback" aria-live="polite"></div>
+        <div class="actions"><button class="btn" onclick="go(5)">← Back</button><button class="btn primary" onclick="go(7)">Reflection →</button></div>
+      </section>
+
+      <section class="panel" id="stage-7">
+        <div class="kicker">08 · Reflection</div><h2>From a sample to a defensible conclusion</h2>
+        <p>Sampling is not simply about deciding how many respondents to approach. It is about defining the target population, establishing a workable frame, choosing a defensible selection process and acknowledging limitations.</p>
+        <div class="grid2">
+          <div class="card"><h3>Key takeaways</h3><ul><li>Match the method to the research question and population.</li><li>Use random selection when probability-based inference is required and feasible.</li><li>Sample size does not compensate for a biased frame or selection process.</li><li>Report the method, frame, selection steps, response rate and limitations.</li></ul></div>
+          <div class="card"><h3>Reflect on your design</h3><label for="reflection">What is one limitation in your proposed sampling design, and how would you reduce it?</label><textarea id="reflection" rows="5" style="width:100%;padding:10px;border:1px solid #cbd5e2;border-radius:9px;font:inherit" placeholder="Write your reflection here..."></textarea><button class="btn" style="margin-top:9px" onclick="saveReflection()">Save reflection on this device</button><div id="reflectionStatus" class="small muted" aria-live="polite"></div></div>
+        </div>
+        <h3 style="margin-top:18px">Suggested academic references</h3>
+        <ul class="small">
+          <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley &amp; Sons.</li>
+          <li>Lohr, S. L. (2021). <em>Sampling: Design and Analysis</em> (3rd ed.). CRC Press.</li>
+          <li>Saunders, M., Lewis, P., &amp; Thornhill, A. <em>Research Methods for Business Students</em>. Pearson (consult the edition prescribed by your institution).</li>
+          <li>Kothari, C. R., &amp; Garg, G. <em>Research Methodology: Methods and Techniques</em>. New Age International (consult the edition prescribed by your institution).</li>
+        </ul>
+        <div class="callout success"><strong>PRAGYA learning cycle completed.</strong> You have moved from purpose and research concepts to method selection, sample-size estimation, application and assessment.</div>
+        <div class="actions"><button class="btn" onclick="go(6)">← Review assessment</button><button class="btn primary" onclick="restart()">Restart simulation ↻</button></div>
+      </section>
+    </main>
+  </div>
+  <footer>PRAGYA · Purpose · Research · Arrange · Generate · Your Engagement · Assessment<br>Teaching simulation for M.Com · All activity data are illustrative · Runs locally in your browser</footer>
+</div>
+<script>
+const panels=[...document.querySelectorAll('.panel')], navButtons=[...document.querySelectorAll('nav button')];
+let current=0;
+function go(i){if(i<0||i>=panels.length)return;current=i;panels.forEach((p,n)=>p.classList.toggle('active',n===i));navButtons.forEach((b,n)=>{b.classList.toggle('active',n===i);if(n===i)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});document.getElementById('stageLabel').textContent=`Stage ${i+1} of 8`;document.getElementById('progressBar').style.width=((i+1)/8*100)+'%';window.scrollTo({top:0,behavior:'smooth'})}
+navButtons.forEach(b=>b.addEventListener('click',()=>go(Number(b.dataset.stage))));
+const methods={
+simple:{family:'Probability sampling',desc:'Every population unit has a known and equal chance of selection when a simple random design is correctly implemented.',how:'Create a complete frame, assign identifiers and select units using a random-number process.',caution:'A poor or incomplete frame creates coverage error. Non-response can still introduce bias.',example:'Randomly select 250 student IDs from a verified list of all eligible M.Com students.'},
+systematic:{family:'Probability sampling',desc:'Select units at a fixed interval after choosing a random starting point.',how:'Calculate k = N/n, choose a random start between 1 and k, then select every kth unit.',caution:'A periodic pattern in the list may align with the interval and distort selection.',example:'From an ordered list of 1,200 eligible students, select a random start and then every 5th student for a sample of about 240.'},
+stratified:{family:'Probability sampling',desc:'Divide the population into meaningful, non-overlapping strata and randomly sample within each stratum.',how:'Define strata such as college, year or gender where justified; then allocate and select randomly within each.',caution:'Strata must be defined clearly, and accurate subgroup counts are needed. Too many small strata complicate fieldwork.',example:'Divide students by programme year and randomly select students from each year, proportionately or using another justified allocation.'},
+cluster:{family:'Probability sampling',desc:'Divide the population into natural groups (clusters), randomly select clusters and study units within them or all units in selected clusters.',how:'List clusters such as colleges, randomly select some colleges, then survey all or a sample of eligible students in them.',caution:'Students within a cluster may be similar. This can increase sampling variance; account for design effects.',example:'Randomly select 4 of 12 colleges, then sample students within those selected colleges.'},
+convenience:{family:'Non-probability sampling',desc:'Select respondents who are readily accessible to the researcher.',how:'Invite available students in a classroom, campus location or accessible online group.',caution:'People who are easiest to reach may differ systematically from those not reached; generalisation is limited.',example:'Survey students attending a particular lecture because they are immediately available.'},
+purposive:{family:'Non-probability sampling',desc:'Select cases because they meet criteria or are expected to provide relevant information.',how:'Set eligibility or expertise criteria and deliberately recruit cases meeting them.',caution:'Selection depends on researcher judgement; inclusion probabilities are not known.',example:'Interview finance officers who have implemented a digital payment system in their organisation.'},
+quota:{family:'Non-probability sampling',desc:'Set target numbers for selected categories and recruit non-randomly until each quota is filled.',how:'Specify category targets, such as 50 first-year and 50 second-year students, then recruit accessible eligible respondents.',caution:'Matching quota proportions does not make the sample random or eliminate within-group selection bias.',example:'Recruit 100 students with a target of 50 from each of two programme years, without random selection.'},
+snowball:{family:'Non-probability sampling',desc:'Initial participants refer other eligible participants, creating a chain of recruitment.',how:'Begin with a small set of eligible participants and ask them to refer others who meet the study criteria.',caution:'Networks may be clustered and people outside those networks may remain excluded.',example:'Recruit participants from a hard-to-reach professional network through trusted referrals.'}
+};
+function showMethod(){let m=methods[document.getElementById('methodSelect').value];document.getElementById('methodFamily').textContent=m.family;document.getElementById('methodTitle').textContent=document.getElementById('methodSelect').selectedOptions[0].text;['Desc','How','Caution','Example'].forEach((k,i)=>document.getElementById('method'+k).textContent=[m.desc,m.how,m.caution,m.example][i])}
+document.getElementById('methodSelect').addEventListener('change',showMethod);showMethod();
+function calculate(){let N=Number(document.getElementById('pop').value),Z=Number(document.getElementById('confidence').value),e=Number(document.getElementById('margin').value)/100,p=Number(document.getElementById('prop').value)/100;document.getElementById('marginVal').textContent=(e*100).toFixed(1)+'%';document.getElementById('propVal').textContent=(p*100).toFixed(0)+'%';if(!Number.isFinite(N)||N<2||!e||!p){document.getElementById('n0').textContent='—';document.getElementById('nFinal').textContent='Check inputs';return}let n0=(Z*Z*p*(1-p))/(e*e),n=n0/(1+(n0-1)/N);document.getElementById('n0').textContent=n0.toFixed(2);document.getElementById('nFinal').textContent=Math.ceil(n).toLocaleString('en-IN')}
+['pop','confidence','margin','prop'].forEach(id=>document.getElementById(id).addEventListener('input',calculate));calculate();
+document.querySelectorAll('#decisionChoices .choice').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#decisionChoices .choice').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');let f=document.getElementById('decisionFeedback');f.className='feedback show '+(b.dataset.answer==='b'?'good':'bad');f.innerHTML=b.dataset.answer==='b'?'<strong>Well reasoned.</strong> Stratified random sampling can ensure that defined subgroups are represented, provided the strata and frame are sound and selection within strata is random.':'<strong>Consider the research objective.</strong> This option may be useful in some settings, but it does not best meet the stated need for subgroup representation with known selection probabilities. Reconsider stratified random sampling.'}));
+function allocate(){let vals=['g1','g2','g3'].map(id=>Math.max(0,Number(document.getElementById(id).value)||0)),n=Math.max(0,Math.floor(Number(document.getElementById('targetN').value)||0)),sum=vals.reduce((a,b)=>a+b,0),names=['Group A','Group B','Group C'],body=document.getElementById('allocationRows');body.innerHTML='';if(sum===0||n===0){document.getElementById('allocationNote').textContent='Enter a positive population total and sample size.';return}let exact=vals.map(v=>v/sum*n),floors=exact.map(Math.floor),remaining=n-floors.reduce((a,b)=>a+b,0);let order=exact.map((v,i)=>({i,r:v-Math.floor(v)})).sort((a,b)=>b.r-a.r);for(let j=0;j<remaining;j++)floors[order[j%3].i]++;names.forEach((name,i)=>{let tr=document.createElement('tr');tr.innerHTML=`<td>${name}</td><td>${vals[i].toLocaleString('en-IN')}</td><td>${floors[i].toLocaleString('en-IN')}</td>`;body.appendChild(tr)});document.getElementById('allocationNote').textContent=`Population total: ${sum.toLocaleString('en-IN')} · Allocated sample total: ${floors.reduce((a,b)=>a+b,0).toLocaleString('en-IN')}. Proportional allocation rounded using largest remainders.`}
+['g1','g2','g3','targetN'].forEach(id=>document.getElementById(id).addEventListener('input',allocate));allocate();
+const questions=[
+{q:'A complete list of all eligible units from which a sample is selected is called the:',o:['Sampling frame','Sampling error','Sample statistic','Quota'],a:0,e:'The sampling frame is the operational list or representation used to select units.'},
+{q:'Which method selects randomly within defined subgroups?',o:['Convenience','Snowball','Stratified random','Purposive'],a:2,e:'Stratified random sampling selects units randomly within each defined stratum.'},
+{q:'A researcher selects every 10th name after a random start. This is:',o:['Cluster sampling','Systematic sampling','Quota sampling','Purposive sampling'],a:1,e:'Systematic sampling uses a random start followed by a fixed interval.'},
+{q:'Which statement about sample size is most accurate?',o:['A larger sample always removes bias.','Sample size alone guarantees representativeness.','A large sample can still be biased by poor selection.','Non-probability samples always need more respondents.'],a:2,e:'A large sample does not correct coverage or selection bias.'},
+{q:'A researcher recruits participants through referrals from initial participants. This is:',o:['Simple random','Stratified','Systematic','Snowball'],a:3,e:'Snowball sampling uses participant referrals and is a non-probability method.'}
+];
+function buildQuiz(){let qroot=document.getElementById('quiz');qroot.innerHTML='';questions.forEach((q,i)=>{let div=document.createElement('div');div.className='card';div.style.margin='12px 0';let h=document.createElement('h3');h.textContent=`${i+1}. ${q.q}`;div.appendChild(h);q.o.forEach((opt,j)=>{let label=document.createElement('label');label.style.fontWeight='500';label.style.display='flex';label.style.gap='9px';label.style.alignItems='start';let radio=document.createElement('input');radio.type='radio';radio.name='q'+i;radio.value=j;radio.style.width='auto';radio.style.marginTop='5px';label.append(radio,document.createTextNode(opt));div.appendChild(label)});let fb=document.createElement('div');fb.className='small muted';fb.id='qfb'+i;div.appendChild(fb);qroot.appendChild(div)})}
+function resetQuiz(){buildQuiz();document.getElementById('quizResult').className='feedback';document.getElementById('quizResult').textContent=''}
+document.getElementById('submitQuiz').addEventListener('click',()=>{let score=0,answered=0;questions.forEach((q,i)=>{let picked=document.querySelector(`input[name="q${i}"]:checked`),fb=document.getElementById('qfb'+i);if(picked){answered++;let ok=Number(picked.value)===q.a;if(ok)score++;fb.textContent=(ok?'Correct. ':'Review. ')+q.e;fb.style.color=ok?'#087f79':'#a43a3a'}else{fb.textContent='Not answered. '+q.e;fb.style.color='#a43a3a'}});let r=document.getElementById('quizResult');r.className='feedback show '+(score>=4?'good':'bad');r.innerHTML=`<strong>Your score: ${score} / ${questions.length}</strong><br>${answered} of ${questions.length} questions answered. ${score>=4?'Strong understanding.':'Review the explanations and try again.'}`});
+buildQuiz();
+function saveReflection(){let val=document.getElementById('reflection').value.trim(),s=document.getElementById('reflectionStatus');if(!val){s.textContent='Write a reflection before saving.';return}try{localStorage.setItem('pragyaSamplingReflection',val);s.textContent='Reflection saved in this browser on this device.'}catch(e){s.textContent='Local saving is unavailable in this browser session.'}}
+try{let saved=localStorage.getItem('pragyaSamplingReflection');if(saved)document.getElementById('reflection').value=saved}catch(e){}
+function restart(){if(confirm('Restart the simulation? Your current quiz answers and selections will be cleared.')){document.querySelectorAll('#decisionChoices .choice').forEach(x=>x.classList.remove('selected'));document.getElementById('decisionFeedback').className='feedback';resetQuiz();go(0)}}
+</script>
+</body>
+</html>
